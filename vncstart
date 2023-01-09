@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+vncserver -geometry 1850x950 -xstartup dbus-launch
+
+DISPLAY=:1 $HOME/.vnc/xstartup
