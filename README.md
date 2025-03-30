@@ -28,26 +28,42 @@ proot-distro login ubuntu
 ```
 apt update;apt install ubuntu-desktop nano plank gnome-session-flashback gnome-terminal ubuntu-wallpapers dbus-x11 -y
 ```
-## than clone repo
+## GNOME SESSION STARTER ##
 ```
-git clone https://github.com/Saikatsaha1996/Ubuntu-Desktop.git && cd Ubuntu-Desktop
+#for /tmp permession issue do "sudo chmod 1777 /tmp/.ICE-unix" & "sudo chown root:root /tmp/.ICE-unix"
+ 
+export DISPLAY=:0
+export PULSE_SERVER=tcp:127.0.0.1:4713
+export XDG_RUNTIME_DIR=/tmp
+export XDG_SESSION_TYPE="x11"
+export XDG_SESSION_DESKTOP="ubuntu"
+export GDMSESSION="ubuntu"
+export XDG_CONFIG_DIRS=/etc/xdg
+export XDG_CURRENT_DESKTOP=GNOME
+export XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/
+gnome-session --disable-acceleration-check &
 ```
+## GNOME INSTALLATION ##
+ 
 ```
-cp vncstart /usr/local/bin/vncstart && chmod +x /usr/local/bin/vncstart
+apt install ubuntu-desktop sudo nano
 ```
-
+## DISABLE SNAP ##
+ 
 ```
-mkdir $HOME/.vnc && cp xstartup $HOME/.vnc/xstartup && chmod +x $HOME/.vnc/xstartup && cd $HOME && mkdir -p /run/dbus && dbus-daemon --system
+apt-get autopurge snapd
+ 
+cat <<EOF | sudo tee /etc/apt/preferences.d/nosnap.pref
+# To prevent repository packages from triggering the installation of Snap,
+# this file forbids snapd from being installed by APT.
+# For more information: https://linuxmint-user-guide.readthedocs.io/en/latest/snap.html
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+EOF
 ```
-## then start your ubuntu desktop
+## FIX SESSION STARTUP ##
 ```
-vncstart
-## vncserver will ask for password do yourself
-
-```
-## than connect to vnc 
-
-```
-localhost:1
-## your password
+for file in $(find /usr -type f -iname "*login1*"); do rm -rf $file
+   done
 ```
