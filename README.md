@@ -36,7 +36,7 @@ export DISPLAY=:0
 export PULSE_SERVER=tcp:127.0.0.1:4713
 export XDG_RUNTIME_DIR=/tmp
 export XDG_SESSION_TYPE="x11"
-export XDG_SESSION_DESKTOP="ubuntu"
+export XDG_SESSION_DESKTOP="gnome"
 export GDMSESSION="ubuntu"
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CURRENT_DESKTOP=GNOME
@@ -66,4 +66,8 @@ EOF
 ```
 for file in $(find /usr -type f -iname "*login1*"); do rm -rf $file
    done
+```
+## FIX SETTINGS ##
+```
+rm -rvf .config/dconf/user
 ```
