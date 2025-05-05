@@ -34,12 +34,16 @@ apt update;apt install ubuntu-desktop nano plank gnome-session-flashback gnome-t
  
 export DISPLAY=:0
 export PULSE_SERVER=tcp:127.0.0.1:4713
-export XDG_RUNTIME_DIR=/tmp
+
+export XDG_RUNTIME_DIR=/tmp/runtime-$(id -u)
+mkdir -p $XDG_RUNTIME_DIR
+chmod 700 $XDG_RUNTIME_DIR
+
 export XDG_SESSION_TYPE="x11"
 export XDG_SESSION_DESKTOP="gnome"
-export GDMSESSION="ubuntu"
+#export GDMSESSION="ubuntu"
 export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CURRENT_DESKTOP=GNOME
+export XDG_CURRENT_DESKTOP=ubuntu:GNOME
 export XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/
 gnome-session --disable-acceleration-check &
 ```
