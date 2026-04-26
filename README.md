@@ -35,7 +35,7 @@ apt update;apt install ubuntu-desktop nano plank gnome-session-flashback gnome-t
 export DISPLAY=:0
 export PULSE_SERVER=tcp:127.0.0.1:4713
 
-export XDG_RUNTIME_DIR=/tmp/runtime-$(id -u)
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
 mkdir -p $XDG_RUNTIME_DIR
 chmod 700 $XDG_RUNTIME_DIR
 
@@ -44,6 +44,7 @@ export XDG_SESSION_DESKTOP="gnome"
 #export GDMSESSION="ubuntu"
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CURRENT_DESKTOP=ubuntu:GNOME
+export XDG_SESSION_CLASS=user
 export XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/
 gnome-session --disable-acceleration-check &
 ```
@@ -74,4 +75,15 @@ for file in $(find /usr -type f -iname "*login1*"); do rm -rf $file
 ## FIX SETTINGS ##
 ```
 rm -rvf .config/dconf/user
+```
+## IMP CMD
+```
+rm -rf /run/dbus/pid &
+
+sudo service dbus start &
+sudo service gdm3 start &
+dbus-daemon --system &
+dbus-launch --exit-with-session &
+gnome-shell --x11 --sm-disable &
+dbus-run-session -- gnome-session --disable-acceleration-check
 ```
