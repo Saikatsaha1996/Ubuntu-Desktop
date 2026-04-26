@@ -52,6 +52,7 @@ gnome-session --disable-acceleration-check &
  
 ```
 apt install ubuntu-desktop sudo nano
+sudo usermod -aG sudo,video,audio,input,render,plugdev ubuntu
 ```
 ## DISABLE SNAP ##
  
