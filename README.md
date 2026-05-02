@@ -34,8 +34,10 @@ apt update;apt install ubuntu-desktop nano plank gnome-session-flashback gnome-t
  
 export DISPLAY=:0
 export PULSE_SERVER=tcp:127.0.0.1:4713
-
+sudo mkdir -p /run/user/$(id -u)
+sudo chown $(id -u):$(id -g) /run/user/$(id -u)
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
 mkdir -p $XDG_RUNTIME_DIR
 chmod 700 $XDG_RUNTIME_DIR
 
@@ -86,5 +88,6 @@ sudo service gdm3 start &
 dbus-daemon --system &
 dbus-launch --exit-with-session &
 gnome-shell --x11 --sm-disable &
+LIBGL_ALWAYS_SOFTWARE=1
 dbus-run-session -- gnome-session --disable-acceleration-check
 ```
