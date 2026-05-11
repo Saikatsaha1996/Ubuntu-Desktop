@@ -154,3 +154,19 @@ exec sway --unsupported-gpu -d
 #startx -- -logverbose 7 -logfile /tmp/xorg.log
 #dbus-run-session kwin_wayland
 ```
+## systemd user permission service 
+sudo nano /etc/systemd/system/fix-user-perm.service
+```
+[Unit]
+Description=Fix User Run Directory Permissions
+After=systemd-user-sessions.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/chown -R 1000:1000 /run/user/1000
+ExecStart=/usr/bin/chmod 700 /run/user/1000
+
+[Install]
+WantedBy=multi-user.target
+```
+sudo systemctl enable fix-user-perm.service
