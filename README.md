@@ -163,10 +163,14 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/chown -R 1000:1000 /run/user/1000
-ExecStart=/usr/bin/chmod 700 /run/user/1000
+#ExecStartPre=/usr/bin/mkdir -p /run/user/1000
+ExecStart=-/usr/bin/chown -R 1000:1000 /run/user/1000
+ExecStart=-/usr/bin/chmod 700 /run/user/1000
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
+
 ```
+sudo systemctl daemon-reload
 sudo systemctl enable fix-user-perm.service
