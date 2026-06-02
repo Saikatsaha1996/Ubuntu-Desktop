@@ -78,6 +78,11 @@ for file in $(find /usr -type f -iname "*login1*"); do rm -rf $file
 ## FIX SETTINGS ##
 ```
 rm -rvf .config/dconf/user
+rm -rf ~/.cache/*
+rm -rf ~/.config/gnome-session ~/.config/dconf ~/.config/nautilus
+rm -rf ~/.local/share/tracker3 ~/.local/share/gnome-shell
+dconf reset -f /org/gnome/
+
 ```
 ## IMP CMD
 ```
