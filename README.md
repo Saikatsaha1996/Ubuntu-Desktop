@@ -179,3 +179,30 @@ WantedBy=multi-user.target
 ```
 sudo systemctl daemon-reload
 sudo systemctl enable fix-user-perm.service
+```
+su
+mkdir -p /data/adb/modules/devshm
+```
+```
+cat > /data/adb/modules/devshm/module.prop << 'EOF'
+id=devshm
+name=Enable DevSHM
+version=1.0
+versionCode=1
+author=ksu-user
+description=Enable /dev/shm tmpfs for Linux compatibility
+EOF
+```
+```
+cat > /data/adb/modules/devshm/service.sh << 'EOF'
+#!/system/bin/sh
+
+sleep 5
+
+mkdir -p /dev/shm
+chmod 1777 /dev/shm
+mount -t tmpfs -o size=512M,mode=1777 tmpfs /dev/shm
+EOF
+
+chmod +x /data/adb/modules/devshm/service.sh
+```
