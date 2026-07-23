@@ -206,3 +206,34 @@ EOF
 
 chmod +x /data/adb/modules/devshm/service.sh
 ```
+udevd fix
+```
+sudo nano /etc/systemd/system/seat-init.service
+```
+service file
+```
+[Unit]
+Description=Prepare Android tty devices for systemd-logind
+After=systemd-udevd.service
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '\
+udevadm control --reload-rules && \
+systemctl restart systemd-udevd && \
+udevadm trigger && \
+udevadm settle && \
+systemctl restart systemd-logind'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+run
+```
+sudo systemctl daemon-reload
+sudo systemctl enable seat-init.service
+sudo systemctl start seat-init.service
+systemctl status seat-init.service
+```
