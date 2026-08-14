@@ -213,18 +213,17 @@ sudo nano /etc/systemd/system/seat-init.service
 service file
 ```
 [Unit]
-Description=Prepare Android tty devices for systemd-logind
-After=systemd-udevd.service
-Before=display-manager.service
+Description=Initialize udev devices for systemd-logind
+DefaultDependencies=no
 
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c '\
-udevadm control --reload-rules && \
-systemctl restart systemd-udevd && \
-udevadm trigger && \
-udevadm settle && \
-systemctl restart systemd-logind'
+After=systemd-udevd.service
+After=local-fs.target
+
+Before=systemd-logind.service
+Before=gdm.service                                                                                                      
+[Service]                                                                                                               Type=oneshot
+ExecStart=/usr/bin/udevadm trigger
+ExecStart=/usr/bin/udevadm settle --timeout=10
 RemainAfterExit=yes
 
 [Install]
